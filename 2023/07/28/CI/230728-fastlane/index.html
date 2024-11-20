@@ -1,0 +1,751 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/image/favicon.png">
+  <link rel="icon" href="/image/favicon.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="boye">
+  <meta name="keywords" content="HBY">
+  
+    <meta name="description" content="Fastlane官网Fastlane官方文档Fastlane Github地址 摘要Fastlane 是一个完全开源的项目，是一款为 iOS 和 Android 开发者提供的自动化构建工具，它可以帮助开发者将 App 打包、签名、测试、发布、信息整理、提交 App Store 等工作完整的连接起来，实现完全自动化的工作流。 安装安装fastlane之前需要安装一些前置软件包。 安装Homebrew">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移动端一键自动化打包发布-Fastlane">
+<meta property="og:url" content="https://houboye.github.io/2023/07/28/CI/230728-fastlane/index.html">
+<meta property="og:site_name" content="H.B.Y">
+<meta property="og:description" content="Fastlane官网Fastlane官方文档Fastlane Github地址 摘要Fastlane 是一个完全开源的项目，是一款为 iOS 和 Android 开发者提供的自动化构建工具，它可以帮助开发者将 App 打包、签名、测试、发布、信息整理、提交 App Store 等工作完整的连接起来，实现完全自动化的工作流。 安装安装fastlane之前需要安装一些前置软件包。 安装Homebrew">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://boye-blog-images.oss-cn-beijing.aliyuncs.com/blog/hby/images/1_bG3YvJAqOBfcXVoi0oFXRg.png">
+<meta property="article:published_time" content="2023-07-28T02:55:55.000Z">
+<meta property="article:modified_time" content="2024-11-20T07:25:36.065Z">
+<meta property="article:author" content="BoYe">
+<meta property="article:tag" content="Fastlane">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://boye-blog-images.oss-cn-beijing.aliyuncs.com/blog/hby/images/1_bG3YvJAqOBfcXVoi0oFXRg.png">
+  
+  
+  
+  <title>移动端一键自动化打包发布-Fastlane - H.B.Y</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"houboye.github.io","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null},"woyaola":null,"cnzz":null},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 60vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>H.B.Y</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/image/banner1.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="移动端一键自动化打包发布-Fastlane"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-07-28 10:55" pubdate>
+          2023年7月28日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          16 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">移动端一键自动化打包发布-Fastlane</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p><strong><a target="_blank" rel="noopener" href="https://fastlane.tools/">Fastlane官网</a></strong><br><strong><a target="_blank" rel="noopener" href="https://docs.fastlane.tools/">Fastlane官方文档</a></strong><br><strong><a target="_blank" rel="noopener" href="https://github.com/fastlane/fastlane">Fastlane Github地址</a></strong></p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>Fastlane 是一个完全开源的项目，是一款为 iOS 和 Android 开发者提供的自动化构建工具，它可以帮助开发者将 App 打包、签名、测试、发布、信息整理、提交 App Store 等工作完整的连接起来，实现完全自动化的工作流。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>安装fastlane之前需要安装一些前置软件包。</p>
+<h2 id="安装Homebrew"><a href="#安装Homebrew" class="headerlink" title="安装Homebrew"></a>安装Homebrew</h2><p>安装具体步骤可参考文章：<a href="/2023/07/27/230727-homebrew">Mac包管理工具-Homebrew</a></p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><p>首先mac系统会自带一个ruby版本。<br>通过如下命令查看ruby版本：</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">ruby -v</span><br></code></pre></td></tr></table></figure>
+<p>如果ruby版本过低可通过以下命令安装指定版本ruby环境：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">brew </span><span class="hljs-keyword">install </span>ruby@x.x<br></code></pre></td></tr></table></figure>
+<p>安装完成后需要配置环境变量。国内的话需要替换gem source，替换为 gems.ruby-china.com。<br>查看gem source命令如下：</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">gem sources</span><br></code></pre></td></tr></table></figure>
+<h2 id="安装xcode命令行工具"><a href="#安装xcode命令行工具" class="headerlink" title="安装xcode命令行工具"></a>安装xcode命令行工具</h2><p>执行如下命令：</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">xcode-<span class="hljs-keyword">select</span> <span class="hljs-comment">--install</span><br></code></pre></td></tr></table></figure>
+<p>如果安装过会有提示，如果没装过就会自动开始安装。一般你如果安装了xcode，并且打开过，都会提示已安装。</p>
+<h2 id="安装fastlane"><a href="#安装fastlane" class="headerlink" title="安装fastlane"></a>安装fastlane</h2><p>安装fastlane有两种方式。<br>第一种是通过gem安装：</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs applescript">sudo gem install -n /usr/<span class="hljs-keyword">local</span>/bin fastlane<br></code></pre></td></tr></table></figure>
+<p>第二种是通过Homebrew安装：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">brew </span><span class="hljs-keyword">install </span>fastlane<br></code></pre></td></tr></table></figure>
+<p>推荐第二种。<br>安装完成后可通过如下命令查看版本，可以正常输出版本信息及安装成功：</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">fastlane <span class="hljs-comment">--version</span><br></code></pre></td></tr></table></figure>
+<h2 id="安装pgyer插件"><a href="#安装pgyer插件" class="headerlink" title="安装pgyer插件"></a>安装pgyer插件</h2><p>如果使用的是pgyer作为分发平台，需要安装插件：</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">fastlane add_plugin pgyer</span><br></code></pre></td></tr></table></figure>
+<h1 id="iOS-setup"><a href="#iOS-setup" class="headerlink" title="iOS setup"></a>iOS setup</h1><h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>打开终端，cd到iOS项目根目录（xcodeproj 的同级目录），输入：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp">fastlane <span class="hljs-keyword">init</span><br></code></pre></td></tr></table></figure>
+<p>根据提示选择或者输入对应信息，会要求你输入apple id账号。初始化完成后项目目录下会出现新的文件夹<code>/fastlane</code>，其中 Appfile 里面存放了 App 的基本信息包括 App_Identifier 、AppID 、Team_ID 等，Fastfile 是最重要的一个文件，在这个文件里面可以编写和定制我们打包脚本的一个文件，所有自定义的功能都写在这里。  </p>
+<h2 id="配置Fastfile"><a href="#配置Fastfile" class="headerlink" title="配置Fastfile"></a>配置Fastfile</h2><p>打开并编辑Fastfile文件。<br>根据需求修改下方配置，并将其粘贴进Fastfile。</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><code class="hljs perl">default_platform(:ios)<br><br>platform :ios <span class="hljs-keyword">do</span><br><br>  desc <span class="hljs-string">&quot;以 development 方式打包并上传到蒲公英&quot;</span><br>  lane :test_pgyer <span class="hljs-keyword">do</span><br><br>    puts <span class="hljs-string">&quot;以 development 方式打包&quot;</span><br>    gym(<br>      <span class="hljs-comment"># 指定打包所使用的输出方式 (可选: app-store, package, ad-hoc, enterprise, development)</span><br>      export_method: <span class="hljs-string">&quot;development&quot;</span>,<br>      <span class="hljs-comment"># 指定项目的 scheme 名称</span><br>      scheme: <span class="hljs-string">&quot;xxx&quot;</span>,<br>      <span class="hljs-comment"># 指定输出的文件夹地址</span><br>      output_directory: <span class="hljs-string">&quot;./archive/test_pgyer/&quot;</span> + Time.new.strftime(<span class="hljs-string">&quot;%Y-%m-%d-%H:%M:%S&quot;</span>),<br>    )<br><br>    puts <span class="hljs-string">&quot;上传 ipa 包到蒲公英&quot;</span><br>    pgyer(<br>      <span class="hljs-comment"># 蒲公英 API KEY</span><br>      api_key: <span class="hljs-string">&quot;xxx&quot;</span>,<br>      <span class="hljs-comment"># 蒲公英 USER KEY（最新版本不需要配置user_key了）</span><br>      <span class="hljs-comment"># user_key: &quot;xxx&quot;</span><br>    )<br><br>  end<br><br>  desc <span class="hljs-string">&quot;以 ad-hoc 方式打包并上传到蒲公英&quot;</span><br>  lane :beta <span class="hljs-keyword">do</span><br>    puts <span class="hljs-string">&quot;自动生成 Provisioning Profiles 文件&quot;</span><br>    sigh(<br>      <span class="hljs-comment"># 指定输出的文件夹地址</span><br>      output_path: <span class="hljs-string">&quot;./archive/sign&quot;</span>,<br>      <span class="hljs-comment"># 是否为 AdHoc 证书（设为 false 或不写默认为 AppStore 证书）</span><br>      adhoc: true<br>    )<br><br>    puts <span class="hljs-string">&quot;以 ad-hoc 方式打包&quot;</span><br>    gym(<br>      <span class="hljs-comment"># 指定打包所使用的输出方式 (可选: app-store, package, ad-hoc, enterprise, development)</span><br>      export_method: <span class="hljs-string">&quot;ad-hoc&quot;</span>,<br>      <span class="hljs-comment"># 指定项目的 scheme 名称</span><br>      scheme: <span class="hljs-string">&quot;xxx&quot;</span>,<br>      <span class="hljs-comment"># 指定输出的文件夹地址</span><br>      output_directory: <span class="hljs-string">&quot;./archive/beta/&quot;</span> + Time.new.strftime(<span class="hljs-string">&quot;%Y-%m-%d-%H:%M:%S&quot;</span>),<br>      <span class="hljs-comment"># 指定打包方式 (可选: Release, Debug)</span><br>      configuration: <span class="hljs-string">&quot;Release&quot;</span><br>    )<br>    puts <span class="hljs-string">&quot;上传 ipa 包到蒲公英&quot;</span><br>    pgyer(<br>      <span class="hljs-comment"># 蒲公英 API KEY</span><br>      api_key: <span class="hljs-string">&quot;xxx&quot;</span>,<br>      <span class="hljs-comment"># 蒲公英 USER KEY（最新版本不需要配置user_key了）</span><br>      <span class="hljs-comment"># user_key: &quot;xxx&quot;</span><br>    )<br><br>  end<br><br>  desc <span class="hljs-string">&quot;以 app-store 方式打包并上传到 iTunes Connect&quot;</span><br>  lane :release <span class="hljs-keyword">do</span><br><br>    puts <span class="hljs-string">&quot;自动生成 Provisioning Profiles 文件&quot;</span><br>    sigh(<br>      <span class="hljs-comment"># 指定输出的文件夹地址</span><br>      output_path: <span class="hljs-string">&quot;./archive/sign&quot;</span><br>    )<br><br>    puts <span class="hljs-string">&quot;以 app-store 方式打包&quot;</span><br>    gym(<br>      <span class="hljs-comment"># 指定打包所使用的输出方式 (可选: app-store, package, ad-hoc, enterprise, development)</span><br>      export_method: <span class="hljs-string">&quot;app-store&quot;</span>,<br>      <span class="hljs-comment"># 指定项目的 scheme 名称</span><br>      scheme: <span class="hljs-string">&quot;xxx&quot;</span>,<br>      <span class="hljs-comment"># 指定输出的文件夹地址</span><br>      output_directory: <span class="hljs-string">&quot;./archive/release/&quot;</span> + Time.new.strftime(<span class="hljs-string">&quot;%Y-%m-%d-%H:%M:%S&quot;</span>),<br>      <span class="hljs-comment"># 指定打包方式 (可选: Release, Debug)</span><br>      configuration: <span class="hljs-string">&quot;Release&quot;</span><br>    )<br><br>    puts <span class="hljs-string">&quot;上传 ipa 包到 iTunes Connect&quot;</span><br>    deliver(<br>      <span class="hljs-comment"># 跳过截图上传</span><br>      skip_screenshots: true,<br>      <span class="hljs-comment"># 跳过元数据上传</span><br>      skip_metadata: true,<br>      <span class="hljs-comment"># 跳过审核直接上传</span><br>      force: true<br>    )<br>  end<br>end<br></code></pre></td></tr></table></figure>
+<h2 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h2><p>打开终端，cd到项目根目录，自动打包并上传至pgyer:</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">fastlane test_pgyer</span><br></code></pre></td></tr></table></figure>
+<p>自动打包并上传至App connect:</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino">fastlane release<br></code></pre></td></tr></table></figure>
+<h1 id="Android-setup"><a href="#Android-setup" class="headerlink" title="Android setup"></a>Android setup</h1><h2 id="安装获取应用版本的-Fastlane-插件"><a href="#安装获取应用版本的-Fastlane-插件" class="headerlink" title="安装获取应用版本的 Fastlane 插件"></a>安装获取应用版本的 Fastlane 插件</h2><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">fastlane add_plugin android_versioning</span><br></code></pre></td></tr></table></figure>
+<h2 id="初始化-1"><a href="#初始化-1" class="headerlink" title="初始化"></a>初始化</h2><p>打开终端，cd到Android项目根目录，输入：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp">fastlane <span class="hljs-keyword">init</span><br></code></pre></td></tr></table></figure>
+<p>根据提示选择或者输入对应信息，需要输入package name，初始化完成后项目目录下会出现新的文件夹<code>/fastlane</code>，其中 Appfile 里面存放了 App 的基本信息，Fastfile 是最重要的一个文件，在这个文件里面可以编写和定制我们打包脚本的一个文件，所有自定义的功能都写在这里。 </p>
+<h2 id="配置Fastfile-1"><a href="#配置Fastfile-1" class="headerlink" title="配置Fastfile"></a>配置Fastfile</h2><p>打开并编辑Fastfile文件。<br>根据需求修改下方配置，并将其粘贴进Fastfile。</p>
+<figure class="highlight hsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs hsp">default_platform(:android)<br><br>platform :android <span class="hljs-keyword">do</span><br><br>     lane:beta <span class="hljs-keyword">do</span><br>     <span class="hljs-meta">#从蒲公英平台拿到的api_key和user_key</span><br>     <span class="hljs-meta">#api_key = <span class="hljs-string">&quot;xxx&quot;</span></span><br>     <span class="hljs-meta">#user_key = <span class="hljs-string">&quot;xxx&quot;</span></span><br>     puts <span class="hljs-string">&quot;开始打包xxxdebug版本&quot;</span><br>     <span class="hljs-meta"># 开始打包</span><br>    gradle(task:<span class="hljs-string">&#x27;clean&#x27;</span>)<br>    gradle(<br>        task: <span class="hljs-string">&#x27;assemble&#x27;</span>,<br>        build_type: <span class="hljs-string">&#x27;Debug&#x27;</span>,<br>      )<br>    puts <span class="hljs-string">&quot;xxx打包成功&quot;</span><br>    <span class="hljs-meta">#puts <span class="hljs-string">&quot;开始上传到蒲公英&quot;</span></span><br>    <span class="hljs-meta">#开始上传ipa到蒲公英，这里用的是蒲公英提供的插件</span><br>    <span class="hljs-meta">#update_description代表更新信息，password代表安装密码</span><br>    <span class="hljs-meta">#pgyer(update_description: <span class="hljs-string">&quot;#&#123;desc&#125;&quot;</span>, api_key: <span class="hljs-string">&quot;#&#123;api_key&#125;&quot;</span>, password: <span class="hljs-string">&quot;123456&quot;</span>, install_type: <span class="hljs-string">&quot;2&quot;</span>)</span><br>    <span class="hljs-meta">#puts <span class="hljs-string">&quot;上传到蒲公英成功&quot;</span></span><br>    <span class="hljs-meta">#在上传完apk后，打开apk的存放文件夹，起到提示上传完成的作用</span><br>    <span class="hljs-meta">#system <span class="hljs-string">&quot;open /User/wangchang/Desktop/defaultFlavor/debug&quot;</span></span><br>    <span class="hljs-keyword">end</span><br><br><br>     lane:release <span class="hljs-keyword">do</span><br>     <span class="hljs-meta">#从蒲公英平台拿到的api_key和user_key</span><br>     <span class="hljs-meta">#api_key = <span class="hljs-string">&quot;xxx&quot;</span></span><br>     <span class="hljs-meta">#user_key = <span class="hljs-string">&quot;xxx&quot;</span></span><br><br><br><br>    <span class="hljs-meta">#输入蒲公英上传apk包后输入的版本描述信息</span><br>    <span class="hljs-meta">#puts <span class="hljs-string">&quot;请输入版本描述：&quot;</span></span><br>    <span class="hljs-meta">#desc = STDIN.gets</span><br><br>    puts <span class="hljs-string">&quot;开始打包xxxrelease版本&quot;</span><br>    <span class="hljs-meta"># 开始打包</span><br>    gradle(task:<span class="hljs-string">&#x27;clean&#x27;</span>)<br>    gradle(<br>        task: <span class="hljs-string">&#x27;assemble&#x27;</span>,<br>        build_type: <span class="hljs-string">&#x27;Release&#x27;</span>,<br>      )<br>    puts <span class="hljs-string">&quot;xxx打包成功&quot;</span><br>    <span class="hljs-meta">#puts <span class="hljs-string">&quot;开始上传到蒲公英&quot;</span></span><br>    <span class="hljs-meta">#开始上传ipa到蒲公英，这里用的是蒲公英提供的插件</span><br>    <span class="hljs-meta">#update_description代表更新信息，password代表安装密码</span><br>    <span class="hljs-meta">#pgyer(update_description: <span class="hljs-string">&quot;#&#123;desc&#125;&quot;</span>, api_key: <span class="hljs-string">&quot;#&#123;api_key&#125;&quot;</span>, password: <span class="hljs-string">&quot;123456&quot;</span>, install_type: <span class="hljs-string">&quot;2&quot;</span>)</span><br>    <span class="hljs-meta">#puts <span class="hljs-string">&quot;上传到蒲公英成功&quot;</span></span><br>    <span class="hljs-meta">#在上传完apk后，打开apk的存放文件夹，起到提示上传完成的作用</span><br>    <span class="hljs-meta">#system <span class="hljs-string">&quot;open /User/wangchang/Desktop/defaultFlavor/debug&quot;</span></span><br>    <span class="hljs-keyword">end</span><br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+<h2 id="fastlane打Android渠道包"><a href="#fastlane打Android渠道包" class="headerlink" title="fastlane打Android渠道包"></a>fastlane打Android渠道包</h2><p>首先，我们自定义一个 Action：add_channels_to_apk，这个 Action 的作用就是： 拷贝最终打包生成的 apk 文件，并修改文件名为渠道名，如 gengmei_qq_630.apk 然后将一个渠道名写入到 apk 文件的 META-INFO 目录中 其次，新建一个 txt 文件，里面写入所有需要打包的渠道名，如：QQ，360，Baidu…等等，渠道名之间用逗号隔开。<br>最后，在 Fastfile 中定义一个 Lane 来进行最终的集成处理：</p>
+<figure class="highlight isbl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs isbl"><span class="hljs-variable">desc</span> <span class="hljs-string">&quot;Package a new app version with different channels&quot;</span><br><span class="hljs-variable">lane</span> :<span class="hljs-variable">do_package_apk</span> <span class="hljs-variable">do</span> |<span class="hljs-variable">options</span>|<br>    <span class="hljs-variable">project</span> = <span class="hljs-string">&quot;#&#123;options[:project]&#125;&quot;</span><br>    <span class="hljs-variable">target_version</span> = <span class="hljs-variable">options</span>[:<span class="hljs-variable">version</span>]<br> <br>    <span class="hljs-function"><span class="hljs-title">hipchat</span>(<span class="hljs-variable">message</span>: <span class="hljs-string">&quot;Start package #&#123;project&#125; at version #&#123;target_version&#125;&quot;</span>)</span><br> <br>    <span class="hljs-variable">git_pull</span><br>    <span class="hljs-function"><span class="hljs-title">gradle</span>(<span class="hljs-variable">task</span>: <span class="hljs-string">&quot;clean&quot;</span>)</span><br>    <span class="hljs-function"><span class="hljs-title">gradle</span>(<span class="hljs-variable">task</span>: <span class="hljs-string">&quot;assembleRelease&quot;</span>)</span><br>    <span class="hljs-function"><span class="hljs-title">add_channels_to_apk</span>(<span class="hljs-variable">channels</span>: <span class="hljs-string">&#x27;./channels.txt&#x27;</span>)</span><br> <br>    <span class="hljs-function"><span class="hljs-title">hipchat</span>(<span class="hljs-variable">message</span>: <span class="hljs-string">&quot;Deliver app #&#123;project&#125; successfully!&quot;</span>)</span><br><span class="hljs-variable">end</span><br></code></pre></td></tr></table></figure>
+<p>然后执行如下的命令打包：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">fastlane</span> do_package_apk project:Gengmei version:<span class="hljs-number">7</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+<h1 id="Fastlane常用命令"><a href="#Fastlane常用命令" class="headerlink" title="Fastlane常用命令"></a>Fastlane常用命令</h1><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>fastlane actions</td>
+<td>展示所有有效action列表</td>
+</tr>
+<tr>
+<td>fastlane action [action_name]</td>
+<td>展示一个action的详细说明，使用方法等</td>
+</tr>
+<tr>
+<td>fastlane lanes</td>
+<td>展示fastfile中的所有lane</td>
+</tr>
+<tr>
+<td>fastlane list</td>
+<td>展示fastfile中的所有的有效的lane</td>
+</tr>
+<tr>
+<td>fastlane new_action</td>
+<td>创建一个新的action</td>
+</tr>
+<tr>
+<td>fastlane env</td>
+<td>打印fastlane、ruby环境，一般提bug到issue的时候会要求提供</td>
+</tr>
+</tbody></table>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CI-CD/" class="category-chain-item">CI/CD</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Fastlane/" class="print-no-link">#Fastlane</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>移动端一键自动化打包发布-Fastlane</div>
+      <div>https://houboye.github.io/2023/07/28/CI/230728-fastlane/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>boye</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年7月28日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/07/28/CI/230728-teamcity-fastlane/" title="持续集成工具-TeamCity&amp;Fastlane">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">持续集成工具-TeamCity&amp;Fastlane</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/07/27/230727-homebrew/" title="Mac包管理工具-Homebrew">
+                        <span class="hidden-mobile">Mac包管理工具-Homebrew</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div class="disqus" style="width:100%">
+    <div id="disqus_thread"></div>
+    
+      <script type="text/javascript">
+        var disqus_config = function() {
+          this.page.url = 'https://houboye.github.io/2023/07/28/CI/230728-fastlane/';
+          this.page.identifier = '/2023/07/28/CI/230728-fastlane/';
+        };
+        Fluid.utils.loadComments('#disqus_thread', function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//' + 'HBY-Blog' + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', new Date());
+          (d.head || d.body).appendChild(s);
+        });
+      </script>
+    
+    <noscript>Please enable JavaScript to view the comments</noscript>
+  </div>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/houboye" target="_blank" rel="nofollow noopener"><span>H·B·Y</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
