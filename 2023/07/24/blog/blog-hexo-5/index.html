@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="前言上一篇文章我们已经说到了如何开始书写我们的blog了，那么接下来就会遇到一个问题，我们写blog的时候肯定会穿插一些图片和截图，那么这些图片的存储问题如何解决呢？接下来就聊一下该如何解决这个问题。 其他渠道其实创建一个图床还有很多其他的渠道，比如说github、腾讯云等等。基本配置都类似，有些是免费有些需要收费，大家可以根据自己的喜好和需求来选择。这里我选用的是阿里云，所以接下来主要介绍下阿里">
+<meta property="og:type" content="article">
+<meta property="og:title" content="博客搭建(五)-创建blog图床(阿里云-OSS)">
+<meta property="og:url" content="https://houboye.github.io/2023/07/24/blog/blog-hexo-5/index.html">
+<meta property="og:site_name" content="H.B.Y">
+<meta property="og:description" content="前言上一篇文章我们已经说到了如何开始书写我们的blog了，那么接下来就会遇到一个问题，我们写blog的时候肯定会穿插一些图片和截图，那么这些图片的存储问题如何解决呢？接下来就聊一下该如何解决这个问题。 其他渠道其实创建一个图床还有很多其他的渠道，比如说github、腾讯云等等。基本配置都类似，有些是免费有些需要收费，大家可以根据自己的喜好和需求来选择。这里我选用的是阿里云，所以接下来主要介绍下阿里">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://boye-blog-images.oss-cn-beijing.aliyuncs.com/blog/hby/images/20230724164938.png">
+<meta property="article:published_time" content="2023-07-24T08:18:21.000Z">
+<meta property="article:modified_time" content="2025-03-24T08:04:03.784Z">
+<meta property="article:author" content="BoYe">
+<meta property="article:tag" content="hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://boye-blog-images.oss-cn-beijing.aliyuncs.com/blog/hby/images/20230724164938.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>博客搭建(五)-创建blog图床(阿里云-OSS)</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/houboye">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2023/07/24/blog/blog-hexo-6/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2023/07/24/blog/blog-hexo-4/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://houboye.github.io/2023/07/24/blog/blog-hexo-5/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://houboye.github.io/2023/07/24/blog/blog-hexo-5/&text=博客搭建(五)-创建blog图床(阿里云-OSS)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://houboye.github.io/2023/07/24/blog/blog-hexo-5/&title=博客搭建(五)-创建blog图床(阿里云-OSS)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://houboye.github.io/2023/07/24/blog/blog-hexo-5/&is_video=false&description=博客搭建(五)-创建blog图床(阿里云-OSS)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=博客搭建(五)-创建blog图床(阿里云-OSS)&body=Check out this article: https://houboye.github.io/2023/07/24/blog/blog-hexo-5/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://houboye.github.io/2023/07/24/blog/blog-hexo-5/&title=博客搭建(五)-创建blog图床(阿里云-OSS)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://houboye.github.io/2023/07/24/blog/blog-hexo-5/&title=博客搭建(五)-创建blog图床(阿里云-OSS)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://houboye.github.io/2023/07/24/blog/blog-hexo-5/&title=博客搭建(五)-创建blog图床(阿里云-OSS)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://houboye.github.io/2023/07/24/blog/blog-hexo-5/&title=博客搭建(五)-创建blog图床(阿里云-OSS)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://houboye.github.io/2023/07/24/blog/blog-hexo-5/&name=博客搭建(五)-创建blog图床(阿里云-OSS)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://houboye.github.io/2023/07/24/blog/blog-hexo-5/&t=博客搭建(五)-创建blog图床(阿里云-OSS)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E6%B8%A0%E9%81%93"><span class="toc-number">2.</span> <span class="toc-text">其他渠道</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%98%BF%E9%87%8C%E4%BA%91%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B"><span class="toc-number">3.</span> <span class="toc-text">阿里云配置过程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%AD%E4%B9%B0%E8%B5%84%E6%BA%90%E5%8C%85"><span class="toc-number">3.1.</span> <span class="toc-text">购买资源包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BABucket"><span class="toc-number">3.2.</span> <span class="toc-text">创建Bucket</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BAAccessKey"><span class="toc-number">3.3.</span> <span class="toc-text">创建AccessKey</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PicGo"><span class="toc-number">4.</span> <span class="toc-text">PicGo</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">4.1.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PicGo%E9%85%8D%E7%BD%AE%E4%B8%8A%E4%BC%A0%E9%98%BF%E9%87%8C%E4%BA%91OSS"><span class="toc-number">4.2.</span> <span class="toc-text">PicGo配置上传阿里云OSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PicGo%E4%B8%8A%E4%BC%A0%E5%A4%B1%E8%B4%A5%E7%9A%84%E8%AF%9D%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3"><span class="toc-number">4.3.</span> <span class="toc-text">PicGo上传失败的话如何解决</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Markdown%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87"><span class="toc-number">5.</span> <span class="toc-text">Markdown插入图片</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        博客搭建(五)-创建blog图床(阿里云-OSS)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">boye</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-07-24T08:18:21.000Z" class="dt-published" itemprop="datePublished">2023-07-24</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/hexo/" rel="tag">hexo</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>上一篇文章我们已经说到了如何开始书写我们的blog了，那么接下来就会遇到一个问题，我们写blog的时候肯定会穿插一些图片和截图，那么这些图片的存储问题如何解决呢？接下来就聊一下该如何解决这个问题。</p>
+<h1 id="其他渠道"><a href="#其他渠道" class="headerlink" title="其他渠道"></a>其他渠道</h1><p>其实创建一个图床还有很多其他的渠道，比如说github、腾讯云等等。基本配置都类似，有些是免费有些需要收费，大家可以根据自己的喜好和需求来选择。这里我选用的是阿里云，所以接下来主要介绍下阿里云OSS创建图床的过程。</p>
+<h1 id="阿里云配置过程"><a href="#阿里云配置过程" class="headerlink" title="阿里云配置过程"></a>阿里云配置过程</h1><h2 id="购买资源包"><a href="#购买资源包" class="headerlink" title="购买资源包"></a>购买资源包</h2><p>首先打开并登录(注册或者用支付宝登录都可以)<a target="_blank" rel="noopener" href="https://cn.aliyun.com/">阿里云官网</a>。<br>产品列表搜索 “对象存储 OSS”，选择后点击“立即购买”。<br>选择购买的OSS资源包配置，如下图：<br><img src="https://boye-blog-images.oss-cn-beijing.aliyuncs.com/blog/hby/images/20230724164938.png"><br>大家可以根据自己的需求调整，这里我选择的是1年40g，折合人民币9元钱，还是不错的。</p>
+<h2 id="创建Bucket"><a href="#创建Bucket" class="headerlink" title="创建Bucket"></a>创建Bucket</h2><p>跳转至 <strong>对象存储 OSS</strong> 控制台，选中“Bucket 列表”，点击“创建Bucket”。添加Bucket信息，信息如下：</p>
+<ul>
+<li>Bucket名称：唯一，如果重复会提示错误，调整名称，直到不提示错误就可以了</li>
+<li>地域：根据需求调整，一般默认就行。</li>
+<li>存储类型：标准存储即可。</li>
+<li>存储冗余类型：推荐-同城冗余存储。</li>
+<li>读写权限：共有读。</li>
+</ul>
+<p>其他非必填项可以根据自己需求调整，也可以使用默认选项。配置完成后点击确认。记录好新建的Bucket名称，后续会用到。</p>
+<h2 id="创建AccessKey"><a href="#创建AccessKey" class="headerlink" title="创建AccessKey"></a>创建AccessKey</h2><p>点击你的阿里云用户头像，下拉列表选择AccessKey管理，点击创建AccessKey，进行验证，创建成功后，将key和serect保存至本地（后面步骤会用）。</p>
+<h1 id="PicGo"><a href="#PicGo" class="headerlink" title="PicGo"></a>PicGo</h1><p>PicGo: 一个用于快速上传图片并获取图片 URL 链接的工具。<br><strong><a target="_blank" rel="noopener" href="https://picgo.github.io/PicGo-Doc/zh/guide/#picgo-is-here">PicGo教程</a></strong><br><strong><a target="_blank" rel="noopener" href="https://molunerfinn.com/PicGo/">PicGo下载</a></strong><br><strong><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/PicGo">PicGo Github仓库</a></strong></p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>下载并安装PicGo，上面有教程链接，大家可以参考。  </p>
+<h2 id="PicGo配置上传阿里云OSS"><a href="#PicGo配置上传阿里云OSS" class="headerlink" title="PicGo配置上传阿里云OSS"></a>PicGo配置上传阿里云OSS</h2><p>第一步中已经获取到了阿里云的配置信息，按照 <strong><a target="_blank" rel="noopener" href="https://picgo.github.io/PicGo-Doc/zh/guide/config.html#%E9%98%BF%E9%87%8C%E4%BA%91oss">官方配置步骤</a></strong> 即可。</p>
+<h2 id="PicGo上传失败的话如何解决"><a href="#PicGo上传失败的话如何解决" class="headerlink" title="PicGo上传失败的话如何解决"></a>PicGo上传失败的话如何解决</h2><p>至于如何用PicGo上传图片官方教程都写的比较详细，这里就不赘述了。接下来主要说下上传失败后，如何查看log。  </p>
+<ol>
+<li>首先进入PicGo设置，点击打开配置文件，查看你的配置信息是否有误。</li>
+<li>如果配置信息无误，点击设置日志文件，日志等级设置为All，size设置为10M，再上传，此时就可以查看日志信息了，然后根据具体报错解决。</li>
+</ol>
+<h1 id="Markdown插入图片"><a href="#Markdown插入图片" class="headerlink" title="Markdown插入图片"></a>Markdown插入图片</h1><p>使用PicGo上传完图片我们会得到一个图片链接，那么如何在文章中插入这张图片呢？<br>首先在上篇文章中的Markdown语法的<a target="_blank" rel="noopener" href="https://markdown.com.cn/basic-syntax/images.html">链接</a>中已有，具体语法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![这是图片](/assets/img/philly-magic-garden.jpg &quot;Magic Gardens&quot;)</span><br></pre></td></tr></table></figure>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>至此，我们blog的主要功能与流程都有了，后续文章主要就介绍一下如何提高效率，以及一些优化的方案了，敬请期待。</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/houboye">项目</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E6%B8%A0%E9%81%93"><span class="toc-number">2.</span> <span class="toc-text">其他渠道</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%98%BF%E9%87%8C%E4%BA%91%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B"><span class="toc-number">3.</span> <span class="toc-text">阿里云配置过程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%AD%E4%B9%B0%E8%B5%84%E6%BA%90%E5%8C%85"><span class="toc-number">3.1.</span> <span class="toc-text">购买资源包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BABucket"><span class="toc-number">3.2.</span> <span class="toc-text">创建Bucket</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BAAccessKey"><span class="toc-number">3.3.</span> <span class="toc-text">创建AccessKey</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#PicGo"><span class="toc-number">4.</span> <span class="toc-text">PicGo</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">4.1.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PicGo%E9%85%8D%E7%BD%AE%E4%B8%8A%E4%BC%A0%E9%98%BF%E9%87%8C%E4%BA%91OSS"><span class="toc-number">4.2.</span> <span class="toc-text">PicGo配置上传阿里云OSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PicGo%E4%B8%8A%E4%BC%A0%E5%A4%B1%E8%B4%A5%E7%9A%84%E8%AF%9D%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3"><span class="toc-number">4.3.</span> <span class="toc-text">PicGo上传失败的话如何解决</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Markdown%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87"><span class="toc-number">5.</span> <span class="toc-text">Markdown插入图片</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://houboye.github.io/2023/07/24/blog/blog-hexo-5/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://houboye.github.io/2023/07/24/blog/blog-hexo-5/&text=博客搭建(五)-创建blog图床(阿里云-OSS)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://houboye.github.io/2023/07/24/blog/blog-hexo-5/&title=博客搭建(五)-创建blog图床(阿里云-OSS)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://houboye.github.io/2023/07/24/blog/blog-hexo-5/&is_video=false&description=博客搭建(五)-创建blog图床(阿里云-OSS)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=博客搭建(五)-创建blog图床(阿里云-OSS)&body=Check out this article: https://houboye.github.io/2023/07/24/blog/blog-hexo-5/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://houboye.github.io/2023/07/24/blog/blog-hexo-5/&title=博客搭建(五)-创建blog图床(阿里云-OSS)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://houboye.github.io/2023/07/24/blog/blog-hexo-5/&title=博客搭建(五)-创建blog图床(阿里云-OSS)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://houboye.github.io/2023/07/24/blog/blog-hexo-5/&title=博客搭建(五)-创建blog图床(阿里云-OSS)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://houboye.github.io/2023/07/24/blog/blog-hexo-5/&title=博客搭建(五)-创建blog图床(阿里云-OSS)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://houboye.github.io/2023/07/24/blog/blog-hexo-5/&name=博客搭建(五)-创建blog图床(阿里云-OSS)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://houboye.github.io/2023/07/24/blog/blog-hexo-5/&t=博客搭建(五)-创建blog图床(阿里云-OSS)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2025
+    BoYe
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/houboye">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'cactus-1';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

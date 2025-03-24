@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="前言目前Python同时更新与维护Python2和Python3，选择Python2还是选择Python3，取决于当前要使用的库、框架支持哪个版本，所以经常会遇到切换版本的情况。 那么应该怎样有效的更改呢？很多小伙伴一定会想到修改环境变量，指定Python的默认路径，这样当然可以，然而不够优雅。那么怎样的方法才算优雅呢？当然是一条命令了👻。 这里通过brew安装pyenv，再用pyenv安装管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MacOS下管理多个Python版本-Pyenv">
+<meta property="og:url" content="https://houboye.github.io/2023/07/26/230726-mac-python-manage/index.html">
+<meta property="og:site_name" content="H.B.Y">
+<meta property="og:description" content="前言目前Python同时更新与维护Python2和Python3，选择Python2还是选择Python3，取决于当前要使用的库、框架支持哪个版本，所以经常会遇到切换版本的情况。 那么应该怎样有效的更改呢？很多小伙伴一定会想到修改环境变量，指定Python的默认路径，这样当然可以，然而不够优雅。那么怎样的方法才算优雅呢？当然是一条命令了👻。 这里通过brew安装pyenv，再用pyenv安装管理">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://boye-blog-images.oss-cn-beijing.aliyuncs.com/blog/hby/images/20230726203600.png">
+<meta property="article:published_time" content="2023-07-26T12:21:38.000Z">
+<meta property="article:modified_time" content="2025-03-24T08:04:03.783Z">
+<meta property="article:author" content="BoYe">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://boye-blog-images.oss-cn-beijing.aliyuncs.com/blog/hby/images/20230726203600.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>MacOS下管理多个Python版本-Pyenv</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/houboye">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2023/07/27/230727-homebrew/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2023/07/26/AI/230726-mac-stable-diffusion-web-ui/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://houboye.github.io/2023/07/26/230726-mac-python-manage/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://houboye.github.io/2023/07/26/230726-mac-python-manage/&text=MacOS下管理多个Python版本-Pyenv"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://houboye.github.io/2023/07/26/230726-mac-python-manage/&title=MacOS下管理多个Python版本-Pyenv"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://houboye.github.io/2023/07/26/230726-mac-python-manage/&is_video=false&description=MacOS下管理多个Python版本-Pyenv"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MacOS下管理多个Python版本-Pyenv&body=Check out this article: https://houboye.github.io/2023/07/26/230726-mac-python-manage/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://houboye.github.io/2023/07/26/230726-mac-python-manage/&title=MacOS下管理多个Python版本-Pyenv"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://houboye.github.io/2023/07/26/230726-mac-python-manage/&title=MacOS下管理多个Python版本-Pyenv"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://houboye.github.io/2023/07/26/230726-mac-python-manage/&title=MacOS下管理多个Python版本-Pyenv"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://houboye.github.io/2023/07/26/230726-mac-python-manage/&title=MacOS下管理多个Python版本-Pyenv"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://houboye.github.io/2023/07/26/230726-mac-python-manage/&name=MacOS下管理多个Python版本-Pyenv&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://houboye.github.io/2023/07/26/230726-mac-python-manage/&t=MacOS下管理多个Python版本-Pyenv"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Homebrew"><span class="toc-number">2.1.</span> <span class="toc-text">安装Homebrew</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85pyenv"><span class="toc-number">2.2.</span> <span class="toc-text">安装pyenv</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E7%AE%A1%E7%90%86%E5%A4%9A%E4%B8%AAPython"><span class="toc-number">2.3.</span> <span class="toc-text">安装管理多个Python</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">2.4.</span> <span class="toc-text">配置环境变量</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%87%E6%8D%A2python%E7%89%88%E6%9C%AC"><span class="toc-number">3.1.</span> <span class="toc-text">切换python版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pyenv%E5%B8%B8%E7%94%A8%E7%9A%84%E5%91%BD%E4%BB%A4%E8%AF%B4%E6%98%8E"><span class="toc-number">3.2.</span> <span class="toc-text">pyenv常用的命令说明</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        MacOS下管理多个Python版本-Pyenv
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">boye</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-07-26T12:21:38.000Z" class="dt-published" itemprop="datePublished">2023-07-26</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/">开发环境</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Python/" rel="tag">Python</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>目前Python同时更新与维护Python2和Python3，选择Python2还是选择Python3，取决于当前要使用的库、框架支持哪个版本，所以经常会遇到切换版本的情况。</p>
+<p>那么应该怎样有效的更改呢？很多小伙伴一定会想到修改环境变量，指定Python的默认路径，这样当然可以，然而不够优雅。那么怎样的方法才算优雅呢？当然是一条命令了👻。</p>
+<p>这里通过brew安装pyenv，再用pyenv安装管理Python。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="安装Homebrew"><a href="#安装Homebrew" class="headerlink" title="安装Homebrew"></a>安装Homebrew</h2><p>安装具体步骤可参考文章：<a href="/2023/07/27/230727-homebrew">Mac包管理工具-Homebrew</a></p>
+<h2 id="安装pyenv"><a href="#安装pyenv" class="headerlink" title="安装pyenv"></a>安装pyenv</h2><p>执行如下命令行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install pyenv</span><br></pre></td></tr></table></figure>
+<p>查看<code>pyenv</code>是否安装成功(正确打印出版本号信息即成功): </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyenv -v</span><br></pre></td></tr></table></figure>
+<h2 id="安装管理多个Python"><a href="#安装管理多个Python" class="headerlink" title="安装管理多个Python"></a>安装管理多个Python</h2><p>假设我们分别要安装python的2.7.15和3.7.0两个版本依次执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyenv install 2.7.15</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyenv install 3.7.0</span><br></pre></td></tr></table></figure>
+<p>安装成功后执行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyenv versions</span><br></pre></td></tr></table></figure>
+<p>输出如下(<code>*</code>代表指定的当前版本，system代表系统python版本):<br><img src="https://boye-blog-images.oss-cn-beijing.aliyuncs.com/blog/hby/images/20230726203600.png"></p>
+<h2 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h2><p>如果执行pyenv命令无法切换python版本或者找不到命令，则需要配置pyenv环境变量，将下方文本加入到你的用户目录下的<code>.bash_profile</code>或者<code>.zshrc</code>结尾位置并保存。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">export PYENV_ROOT=&quot;$HOME/.pyenv&quot;</span><br><span class="line">export PATH=&quot;$PYENV_ROOT/shims:$PATH&quot;</span><br><span class="line">if command -v pyenv 1&gt;/dev/null 2&gt;&amp;1; then</span><br><span class="line"> eval &quot;$(pyenv init -)&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<h1 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h1><h2 id="切换python版本"><a href="#切换python版本" class="headerlink" title="切换python版本"></a>切换python版本</h2><p>执行<code>pyenv global [目标python的版本号]</code>即可切换python版本，如切换至3.7.0</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pyenv global 3.7.0</span><br></pre></td></tr></table></figure>
+<p>用<code>python --version</code>或者<code>pyenv versions</code>查看是否切换成功</p>
+<h2 id="pyenv常用的命令说明"><a href="#pyenv常用的命令说明" class="headerlink" title="pyenv常用的命令说明"></a>pyenv常用的命令说明</h2><p>使用方式: pyenv &lt;命令&gt; [&lt;参数&gt;]</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>commands</td>
+<td>查看所有命令</td>
+</tr>
+<tr>
+<td>local</td>
+<td>设置或显示本地的Python版本</td>
+</tr>
+<tr>
+<td>global</td>
+<td>设置或显示全局Python版本</td>
+</tr>
+<tr>
+<td>shell</td>
+<td>设置或显示shell指定的Python版本</td>
+</tr>
+<tr>
+<td>install</td>
+<td>安装指定Python版本</td>
+</tr>
+<tr>
+<td>uninstall</td>
+<td>卸载指定Python版本</td>
+</tr>
+<tr>
+<td>version</td>
+<td>显示当前的Python版本及其本地路径</td>
+</tr>
+<tr>
+<td>versions</td>
+<td>查看所有已经安装的版本</td>
+</tr>
+<tr>
+<td>which</td>
+<td>显示安装路径</td>
+</tr>
+</tbody></table>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/houboye">项目</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Homebrew"><span class="toc-number">2.1.</span> <span class="toc-text">安装Homebrew</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85pyenv"><span class="toc-number">2.2.</span> <span class="toc-text">安装pyenv</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E7%AE%A1%E7%90%86%E5%A4%9A%E4%B8%AAPython"><span class="toc-number">2.3.</span> <span class="toc-text">安装管理多个Python</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">2.4.</span> <span class="toc-text">配置环境变量</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%87%E6%8D%A2python%E7%89%88%E6%9C%AC"><span class="toc-number">3.1.</span> <span class="toc-text">切换python版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pyenv%E5%B8%B8%E7%94%A8%E7%9A%84%E5%91%BD%E4%BB%A4%E8%AF%B4%E6%98%8E"><span class="toc-number">3.2.</span> <span class="toc-text">pyenv常用的命令说明</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://houboye.github.io/2023/07/26/230726-mac-python-manage/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://houboye.github.io/2023/07/26/230726-mac-python-manage/&text=MacOS下管理多个Python版本-Pyenv"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://houboye.github.io/2023/07/26/230726-mac-python-manage/&title=MacOS下管理多个Python版本-Pyenv"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://houboye.github.io/2023/07/26/230726-mac-python-manage/&is_video=false&description=MacOS下管理多个Python版本-Pyenv"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MacOS下管理多个Python版本-Pyenv&body=Check out this article: https://houboye.github.io/2023/07/26/230726-mac-python-manage/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://houboye.github.io/2023/07/26/230726-mac-python-manage/&title=MacOS下管理多个Python版本-Pyenv"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://houboye.github.io/2023/07/26/230726-mac-python-manage/&title=MacOS下管理多个Python版本-Pyenv"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://houboye.github.io/2023/07/26/230726-mac-python-manage/&title=MacOS下管理多个Python版本-Pyenv"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://houboye.github.io/2023/07/26/230726-mac-python-manage/&title=MacOS下管理多个Python版本-Pyenv"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://houboye.github.io/2023/07/26/230726-mac-python-manage/&name=MacOS下管理多个Python版本-Pyenv&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://houboye.github.io/2023/07/26/230726-mac-python-manage/&t=MacOS下管理多个Python版本-Pyenv"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2025
+    BoYe
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/houboye">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'cactus-1';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

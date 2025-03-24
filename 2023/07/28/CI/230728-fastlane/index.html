@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Fastlane官网Fastlane官方文档Fastlane Github地址 摘要Fastlane 是一个完全开源的项目，是一款为 iOS 和 Android 开发者提供的自动化构建工具，它可以帮助开发者将 App 打包、签名、测试、发布、信息整理、提交 App Store 等工作完整的连接起来，实现完全自动化的工作流。 安装安装fastlane之前需要安装一些前置软件包。 安装Homebrew">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移动端一键自动化打包发布-Fastlane">
+<meta property="og:url" content="https://houboye.github.io/2023/07/28/CI/230728-fastlane/index.html">
+<meta property="og:site_name" content="H.B.Y">
+<meta property="og:description" content="Fastlane官网Fastlane官方文档Fastlane Github地址 摘要Fastlane 是一个完全开源的项目，是一款为 iOS 和 Android 开发者提供的自动化构建工具，它可以帮助开发者将 App 打包、签名、测试、发布、信息整理、提交 App Store 等工作完整的连接起来，实现完全自动化的工作流。 安装安装fastlane之前需要安装一些前置软件包。 安装Homebrew">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-07-28T02:55:55.000Z">
+<meta property="article:modified_time" content="2025-03-24T08:04:03.784Z">
+<meta property="article:author" content="BoYe">
+<meta property="article:tag" content="Fastlane">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>移动端一键自动化打包发布-Fastlane</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/houboye">项目</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2023/07/28/CI/230728-teamcity-fastlane/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2023/07/27/230727-homebrew/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://houboye.github.io/2023/07/28/CI/230728-fastlane/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://houboye.github.io/2023/07/28/CI/230728-fastlane/&text=移动端一键自动化打包发布-Fastlane"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://houboye.github.io/2023/07/28/CI/230728-fastlane/&title=移动端一键自动化打包发布-Fastlane"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://houboye.github.io/2023/07/28/CI/230728-fastlane/&is_video=false&description=移动端一键自动化打包发布-Fastlane"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=移动端一键自动化打包发布-Fastlane&body=Check out this article: https://houboye.github.io/2023/07/28/CI/230728-fastlane/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://houboye.github.io/2023/07/28/CI/230728-fastlane/&title=移动端一键自动化打包发布-Fastlane"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://houboye.github.io/2023/07/28/CI/230728-fastlane/&title=移动端一键自动化打包发布-Fastlane"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://houboye.github.io/2023/07/28/CI/230728-fastlane/&title=移动端一键自动化打包发布-Fastlane"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://houboye.github.io/2023/07/28/CI/230728-fastlane/&title=移动端一键自动化打包发布-Fastlane"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://houboye.github.io/2023/07/28/CI/230728-fastlane/&name=移动端一键自动化打包发布-Fastlane&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://houboye.github.io/2023/07/28/CI/230728-fastlane/&t=移动端一键自动化打包发布-Fastlane"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%91%98%E8%A6%81"><span class="toc-number">1.</span> <span class="toc-text">摘要</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Homebrew"><span class="toc-number">2.1.</span> <span class="toc-text">安装Homebrew</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ruby"><span class="toc-number">2.2.</span> <span class="toc-text">Ruby</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85xcode%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7"><span class="toc-number">2.3.</span> <span class="toc-text">安装xcode命令行工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85fastlane"><span class="toc-number">2.4.</span> <span class="toc-text">安装fastlane</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85pgyer%E6%8F%92%E4%BB%B6"><span class="toc-number">2.5.</span> <span class="toc-text">安装pgyer插件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#iOS-setup"><span class="toc-number">3.</span> <span class="toc-text">iOS setup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">3.1.</span> <span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEFastfile"><span class="toc-number">3.2.</span> <span class="toc-text">配置Fastfile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E5%8C%85"><span class="toc-number">3.3.</span> <span class="toc-text">打包</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Android-setup"><span class="toc-number">4.</span> <span class="toc-text">Android setup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E8%8E%B7%E5%8F%96%E5%BA%94%E7%94%A8%E7%89%88%E6%9C%AC%E7%9A%84-Fastlane-%E6%8F%92%E4%BB%B6"><span class="toc-number">4.1.</span> <span class="toc-text">安装获取应用版本的 Fastlane 插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96-1"><span class="toc-number">4.2.</span> <span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEFastfile-1"><span class="toc-number">4.3.</span> <span class="toc-text">配置Fastfile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fastlane%E6%89%93Android%E6%B8%A0%E9%81%93%E5%8C%85"><span class="toc-number">4.4.</span> <span class="toc-text">fastlane打Android渠道包</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Fastlane%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">5.</span> <span class="toc-text">Fastlane常用命令</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        移动端一键自动化打包发布-Fastlane
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">boye</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-07-28T02:55:55.000Z" class="dt-published" itemprop="datePublished">2023-07-28</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/CI-CD/">CI/CD</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Fastlane/" rel="tag">Fastlane</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><strong><a target="_blank" rel="noopener" href="https://fastlane.tools/">Fastlane官网</a></strong><br><strong><a target="_blank" rel="noopener" href="https://docs.fastlane.tools/">Fastlane官方文档</a></strong><br><strong><a target="_blank" rel="noopener" href="https://github.com/fastlane/fastlane">Fastlane Github地址</a></strong></p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>Fastlane 是一个完全开源的项目，是一款为 iOS 和 Android 开发者提供的自动化构建工具，它可以帮助开发者将 App 打包、签名、测试、发布、信息整理、提交 App Store 等工作完整的连接起来，实现完全自动化的工作流。</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>安装fastlane之前需要安装一些前置软件包。</p>
+<h2 id="安装Homebrew"><a href="#安装Homebrew" class="headerlink" title="安装Homebrew"></a>安装Homebrew</h2><p>安装具体步骤可参考文章：<a href="/2023/07/27/230727-homebrew">Mac包管理工具-Homebrew</a></p>
+<h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><p>首先mac系统会自带一个ruby版本。<br>通过如下命令查看ruby版本：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ruby -v</span><br></pre></td></tr></table></figure>
+<p>如果ruby版本过低可通过以下命令安装指定版本ruby环境：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install ruby@x.x</span><br></pre></td></tr></table></figure>
+<p>安装完成后需要配置环境变量。国内的话需要替换gem source，替换为 gems.ruby-china.com。<br>查看gem source命令如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gem sources</span><br></pre></td></tr></table></figure>
+<h2 id="安装xcode命令行工具"><a href="#安装xcode命令行工具" class="headerlink" title="安装xcode命令行工具"></a>安装xcode命令行工具</h2><p>执行如下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcode-select --install</span><br></pre></td></tr></table></figure>
+<p>如果安装过会有提示，如果没装过就会自动开始安装。一般你如果安装了xcode，并且打开过，都会提示已安装。</p>
+<h2 id="安装fastlane"><a href="#安装fastlane" class="headerlink" title="安装fastlane"></a>安装fastlane</h2><p>安装fastlane有两种方式。<br>第一种是通过gem安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gem install -n /usr/local/bin fastlane</span><br></pre></td></tr></table></figure>
+<p>第二种是通过Homebrew安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install fastlane</span><br></pre></td></tr></table></figure>
+<p>推荐第二种。<br>安装完成后可通过如下命令查看版本，可以正常输出版本信息及安装成功：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastlane --version</span><br></pre></td></tr></table></figure>
+<h2 id="安装pgyer插件"><a href="#安装pgyer插件" class="headerlink" title="安装pgyer插件"></a>安装pgyer插件</h2><p>如果使用的是pgyer作为分发平台，需要安装插件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastlane add_plugin pgyer</span><br></pre></td></tr></table></figure>
+<h1 id="iOS-setup"><a href="#iOS-setup" class="headerlink" title="iOS setup"></a>iOS setup</h1><h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>打开终端，cd到iOS项目根目录（xcodeproj 的同级目录），输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastlane init</span><br></pre></td></tr></table></figure>
+<p>根据提示选择或者输入对应信息，会要求你输入apple id账号。初始化完成后项目目录下会出现新的文件夹<code>/fastlane</code>，其中 Appfile 里面存放了 App 的基本信息包括 App_Identifier 、AppID 、Team_ID 等，Fastfile 是最重要的一个文件，在这个文件里面可以编写和定制我们打包脚本的一个文件，所有自定义的功能都写在这里。  </p>
+<h2 id="配置Fastfile"><a href="#配置Fastfile" class="headerlink" title="配置Fastfile"></a>配置Fastfile</h2><p>打开并编辑Fastfile文件。<br>根据需求修改下方配置，并将其粘贴进Fastfile。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line">default_platform(:ios)</span><br><span class="line"></span><br><span class="line">platform :ios do</span><br><span class="line"></span><br><span class="line">  desc &quot;以 development 方式打包并上传到蒲公英&quot;</span><br><span class="line">  lane :test_pgyer do</span><br><span class="line"></span><br><span class="line">    puts &quot;以 development 方式打包&quot;</span><br><span class="line">    gym(</span><br><span class="line">      # 指定打包所使用的输出方式 (可选: app-store, package, ad-hoc, enterprise, development)</span><br><span class="line">      export_method: &quot;development&quot;,</span><br><span class="line">      # 指定项目的 scheme 名称</span><br><span class="line">      scheme: &quot;xxx&quot;,</span><br><span class="line">      # 指定输出的文件夹地址</span><br><span class="line">      output_directory: &quot;./archive/test_pgyer/&quot; + Time.new.strftime(&quot;%Y-%m-%d-%H:%M:%S&quot;),</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    puts &quot;上传 ipa 包到蒲公英&quot;</span><br><span class="line">    pgyer(</span><br><span class="line">      # 蒲公英 API KEY</span><br><span class="line">      api_key: &quot;xxx&quot;,</span><br><span class="line">      # 蒲公英 USER KEY（最新版本不需要配置user_key了）</span><br><span class="line">      # user_key: &quot;xxx&quot;</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">  end</span><br><span class="line"></span><br><span class="line">  desc &quot;以 ad-hoc 方式打包并上传到蒲公英&quot;</span><br><span class="line">  lane :beta do</span><br><span class="line">    puts &quot;自动生成 Provisioning Profiles 文件&quot;</span><br><span class="line">    sigh(</span><br><span class="line">      # 指定输出的文件夹地址</span><br><span class="line">      output_path: &quot;./archive/sign&quot;,</span><br><span class="line">      # 是否为 AdHoc 证书（设为 false 或不写默认为 AppStore 证书）</span><br><span class="line">      adhoc: true</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    puts &quot;以 ad-hoc 方式打包&quot;</span><br><span class="line">    gym(</span><br><span class="line">      # 指定打包所使用的输出方式 (可选: app-store, package, ad-hoc, enterprise, development)</span><br><span class="line">      export_method: &quot;ad-hoc&quot;,</span><br><span class="line">      # 指定项目的 scheme 名称</span><br><span class="line">      scheme: &quot;xxx&quot;,</span><br><span class="line">      # 指定输出的文件夹地址</span><br><span class="line">      output_directory: &quot;./archive/beta/&quot; + Time.new.strftime(&quot;%Y-%m-%d-%H:%M:%S&quot;),</span><br><span class="line">      # 指定打包方式 (可选: Release, Debug)</span><br><span class="line">      configuration: &quot;Release&quot;</span><br><span class="line">    )</span><br><span class="line">    puts &quot;上传 ipa 包到蒲公英&quot;</span><br><span class="line">    pgyer(</span><br><span class="line">      # 蒲公英 API KEY</span><br><span class="line">      api_key: &quot;xxx&quot;,</span><br><span class="line">      # 蒲公英 USER KEY（最新版本不需要配置user_key了）</span><br><span class="line">      # user_key: &quot;xxx&quot;</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">  end</span><br><span class="line"></span><br><span class="line">  desc &quot;以 app-store 方式打包并上传到 iTunes Connect&quot;</span><br><span class="line">  lane :release do</span><br><span class="line"></span><br><span class="line">    puts &quot;自动生成 Provisioning Profiles 文件&quot;</span><br><span class="line">    sigh(</span><br><span class="line">      # 指定输出的文件夹地址</span><br><span class="line">      output_path: &quot;./archive/sign&quot;</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    puts &quot;以 app-store 方式打包&quot;</span><br><span class="line">    gym(</span><br><span class="line">      # 指定打包所使用的输出方式 (可选: app-store, package, ad-hoc, enterprise, development)</span><br><span class="line">      export_method: &quot;app-store&quot;,</span><br><span class="line">      # 指定项目的 scheme 名称</span><br><span class="line">      scheme: &quot;xxx&quot;,</span><br><span class="line">      # 指定输出的文件夹地址</span><br><span class="line">      output_directory: &quot;./archive/release/&quot; + Time.new.strftime(&quot;%Y-%m-%d-%H:%M:%S&quot;),</span><br><span class="line">      # 指定打包方式 (可选: Release, Debug)</span><br><span class="line">      configuration: &quot;Release&quot;</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    puts &quot;上传 ipa 包到 iTunes Connect&quot;</span><br><span class="line">    deliver(</span><br><span class="line">      # 跳过截图上传</span><br><span class="line">      skip_screenshots: true,</span><br><span class="line">      # 跳过元数据上传</span><br><span class="line">      skip_metadata: true,</span><br><span class="line">      # 跳过审核直接上传</span><br><span class="line">      force: true</span><br><span class="line">    )</span><br><span class="line">  end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h2 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h2><p>打开终端，cd到项目根目录，自动打包并上传至pgyer:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastlane test_pgyer</span><br></pre></td></tr></table></figure>
+<p>自动打包并上传至App connect:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastlane release</span><br></pre></td></tr></table></figure>
+<h1 id="Android-setup"><a href="#Android-setup" class="headerlink" title="Android setup"></a>Android setup</h1><h2 id="安装获取应用版本的-Fastlane-插件"><a href="#安装获取应用版本的-Fastlane-插件" class="headerlink" title="安装获取应用版本的 Fastlane 插件"></a>安装获取应用版本的 Fastlane 插件</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastlane add_plugin android_versioning</span><br></pre></td></tr></table></figure>
+<h2 id="初始化-1"><a href="#初始化-1" class="headerlink" title="初始化"></a>初始化</h2><p>打开终端，cd到Android项目根目录，输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastlane init</span><br></pre></td></tr></table></figure>
+<p>根据提示选择或者输入对应信息，需要输入package name，初始化完成后项目目录下会出现新的文件夹<code>/fastlane</code>，其中 Appfile 里面存放了 App 的基本信息，Fastfile 是最重要的一个文件，在这个文件里面可以编写和定制我们打包脚本的一个文件，所有自定义的功能都写在这里。 </p>
+<h2 id="配置Fastfile-1"><a href="#配置Fastfile-1" class="headerlink" title="配置Fastfile"></a>配置Fastfile</h2><p>打开并编辑Fastfile文件。<br>根据需求修改下方配置，并将其粘贴进Fastfile。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">default_platform(:android)</span><br><span class="line"></span><br><span class="line">platform :android do</span><br><span class="line"></span><br><span class="line">     lane:beta do</span><br><span class="line">     #从蒲公英平台拿到的api_key和user_key</span><br><span class="line">     #api_key = &quot;xxx&quot;</span><br><span class="line">     #user_key = &quot;xxx&quot;</span><br><span class="line">     puts &quot;开始打包xxxdebug版本&quot;</span><br><span class="line">     # 开始打包</span><br><span class="line">    gradle(task:&#x27;clean&#x27;)</span><br><span class="line">    gradle(</span><br><span class="line">        task: &#x27;assemble&#x27;,</span><br><span class="line">        build_type: &#x27;Debug&#x27;,</span><br><span class="line">      )</span><br><span class="line">    puts &quot;xxx打包成功&quot;</span><br><span class="line">    #puts &quot;开始上传到蒲公英&quot;</span><br><span class="line">    #开始上传ipa到蒲公英，这里用的是蒲公英提供的插件</span><br><span class="line">    #update_description代表更新信息，password代表安装密码</span><br><span class="line">    #pgyer(update_description: &quot;#&#123;desc&#125;&quot;, api_key: &quot;#&#123;api_key&#125;&quot;, password: &quot;123456&quot;, install_type: &quot;2&quot;)</span><br><span class="line">    #puts &quot;上传到蒲公英成功&quot;</span><br><span class="line">    #在上传完apk后，打开apk的存放文件夹，起到提示上传完成的作用</span><br><span class="line">    #system &quot;open /User/wangchang/Desktop/defaultFlavor/debug&quot;</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">     lane:release do</span><br><span class="line">     #从蒲公英平台拿到的api_key和user_key</span><br><span class="line">     #api_key = &quot;xxx&quot;</span><br><span class="line">     #user_key = &quot;xxx&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    #输入蒲公英上传apk包后输入的版本描述信息</span><br><span class="line">    #puts &quot;请输入版本描述：&quot;</span><br><span class="line">    #desc = STDIN.gets</span><br><span class="line"></span><br><span class="line">    puts &quot;开始打包xxxrelease版本&quot;</span><br><span class="line">    # 开始打包</span><br><span class="line">    gradle(task:&#x27;clean&#x27;)</span><br><span class="line">    gradle(</span><br><span class="line">        task: &#x27;assemble&#x27;,</span><br><span class="line">        build_type: &#x27;Release&#x27;,</span><br><span class="line">      )</span><br><span class="line">    puts &quot;xxx打包成功&quot;</span><br><span class="line">    #puts &quot;开始上传到蒲公英&quot;</span><br><span class="line">    #开始上传ipa到蒲公英，这里用的是蒲公英提供的插件</span><br><span class="line">    #update_description代表更新信息，password代表安装密码</span><br><span class="line">    #pgyer(update_description: &quot;#&#123;desc&#125;&quot;, api_key: &quot;#&#123;api_key&#125;&quot;, password: &quot;123456&quot;, install_type: &quot;2&quot;)</span><br><span class="line">    #puts &quot;上传到蒲公英成功&quot;</span><br><span class="line">    #在上传完apk后，打开apk的存放文件夹，起到提示上传完成的作用</span><br><span class="line">    #system &quot;open /User/wangchang/Desktop/defaultFlavor/debug&quot;</span><br><span class="line">    end</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h2 id="fastlane打Android渠道包"><a href="#fastlane打Android渠道包" class="headerlink" title="fastlane打Android渠道包"></a>fastlane打Android渠道包</h2><p>首先，我们自定义一个 Action：add_channels_to_apk，这个 Action 的作用就是： 拷贝最终打包生成的 apk 文件，并修改文件名为渠道名，如 gengmei_qq_630.apk 然后将一个渠道名写入到 apk 文件的 META-INFO 目录中 其次，新建一个 txt 文件，里面写入所有需要打包的渠道名，如：QQ，360，Baidu…等等，渠道名之间用逗号隔开。<br>最后，在 Fastfile 中定义一个 Lane 来进行最终的集成处理：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">desc &quot;Package a new app version with different channels&quot;</span><br><span class="line">lane :do_package_apk do |options|</span><br><span class="line">    project = &quot;#&#123;options[:project]&#125;&quot;</span><br><span class="line">    target_version = options[:version]</span><br><span class="line"> </span><br><span class="line">    hipchat(message: &quot;Start package #&#123;project&#125; at version #&#123;target_version&#125;&quot;)</span><br><span class="line"> </span><br><span class="line">    git_pull</span><br><span class="line">    gradle(task: &quot;clean&quot;)</span><br><span class="line">    gradle(task: &quot;assembleRelease&quot;)</span><br><span class="line">    add_channels_to_apk(channels: &#x27;./channels.txt&#x27;)</span><br><span class="line"> </span><br><span class="line">    hipchat(message: &quot;Deliver app #&#123;project&#125; successfully!&quot;)</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>然后执行如下的命令打包：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastlane do_package_apk project:Gengmei version:7.0.0</span><br></pre></td></tr></table></figure>
+<h1 id="Fastlane常用命令"><a href="#Fastlane常用命令" class="headerlink" title="Fastlane常用命令"></a>Fastlane常用命令</h1><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>fastlane actions</td>
+<td>展示所有有效action列表</td>
+</tr>
+<tr>
+<td>fastlane action [action_name]</td>
+<td>展示一个action的详细说明，使用方法等</td>
+</tr>
+<tr>
+<td>fastlane lanes</td>
+<td>展示fastfile中的所有lane</td>
+</tr>
+<tr>
+<td>fastlane list</td>
+<td>展示fastfile中的所有的有效的lane</td>
+</tr>
+<tr>
+<td>fastlane new_action</td>
+<td>创建一个新的action</td>
+</tr>
+<tr>
+<td>fastlane env</td>
+<td>打印fastlane、ruby环境，一般提bug到issue的时候会要求提供</td>
+</tr>
+</tbody></table>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/houboye">项目</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%91%98%E8%A6%81"><span class="toc-number">1.</span> <span class="toc-text">摘要</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Homebrew"><span class="toc-number">2.1.</span> <span class="toc-text">安装Homebrew</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ruby"><span class="toc-number">2.2.</span> <span class="toc-text">Ruby</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85xcode%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7"><span class="toc-number">2.3.</span> <span class="toc-text">安装xcode命令行工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85fastlane"><span class="toc-number">2.4.</span> <span class="toc-text">安装fastlane</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85pgyer%E6%8F%92%E4%BB%B6"><span class="toc-number">2.5.</span> <span class="toc-text">安装pgyer插件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#iOS-setup"><span class="toc-number">3.</span> <span class="toc-text">iOS setup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">3.1.</span> <span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEFastfile"><span class="toc-number">3.2.</span> <span class="toc-text">配置Fastfile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E5%8C%85"><span class="toc-number">3.3.</span> <span class="toc-text">打包</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Android-setup"><span class="toc-number">4.</span> <span class="toc-text">Android setup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E8%8E%B7%E5%8F%96%E5%BA%94%E7%94%A8%E7%89%88%E6%9C%AC%E7%9A%84-Fastlane-%E6%8F%92%E4%BB%B6"><span class="toc-number">4.1.</span> <span class="toc-text">安装获取应用版本的 Fastlane 插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96-1"><span class="toc-number">4.2.</span> <span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEFastfile-1"><span class="toc-number">4.3.</span> <span class="toc-text">配置Fastfile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fastlane%E6%89%93Android%E6%B8%A0%E9%81%93%E5%8C%85"><span class="toc-number">4.4.</span> <span class="toc-text">fastlane打Android渠道包</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Fastlane%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">5.</span> <span class="toc-text">Fastlane常用命令</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://houboye.github.io/2023/07/28/CI/230728-fastlane/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://houboye.github.io/2023/07/28/CI/230728-fastlane/&text=移动端一键自动化打包发布-Fastlane"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://houboye.github.io/2023/07/28/CI/230728-fastlane/&title=移动端一键自动化打包发布-Fastlane"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://houboye.github.io/2023/07/28/CI/230728-fastlane/&is_video=false&description=移动端一键自动化打包发布-Fastlane"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=移动端一键自动化打包发布-Fastlane&body=Check out this article: https://houboye.github.io/2023/07/28/CI/230728-fastlane/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://houboye.github.io/2023/07/28/CI/230728-fastlane/&title=移动端一键自动化打包发布-Fastlane"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://houboye.github.io/2023/07/28/CI/230728-fastlane/&title=移动端一键自动化打包发布-Fastlane"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://houboye.github.io/2023/07/28/CI/230728-fastlane/&title=移动端一键自动化打包发布-Fastlane"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://houboye.github.io/2023/07/28/CI/230728-fastlane/&title=移动端一键自动化打包发布-Fastlane"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://houboye.github.io/2023/07/28/CI/230728-fastlane/&name=移动端一键自动化打包发布-Fastlane&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://houboye.github.io/2023/07/28/CI/230728-fastlane/&t=移动端一键自动化打包发布-Fastlane"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2025
+    BoYe
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/houboye">项目</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'cactus-1';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>
